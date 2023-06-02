@@ -1,29 +1,49 @@
-require 'find'
+require "find"
 
 allClasses = Array.new
+unusedClasses = Array.new
 
 # FIND ALL CLASSES
-Find.find('./sample') do |findClasses|
+Find.find("./sample") do |findClasses|
   case
     when File.file?(findClasses) then 
 
-      File.open(findClasses, 'r') do |readFile|
+      File.open(findClasses, "r") do |readFile|
 
         if findClasses.end_with?(".html", "xhtml")
-          puts "Reading file:  #{findClasses}"
-
           while line = readFile.gets
             if line.include? "class=\""
               startClasses = line.split("class=\"")[1]
               startClasses = startClasses.split("\"")[0]
-              allClasses << startClasses.split(" ")
+              startClasses = startClasses.split(" ")
+              for thisClass in startClasses do
+                allClasses << thisClass
+              end
             end
           end
         end
+
       end
     #
   end
 end
 
-puts "\nClasses Found: "
-puts allClasses
+# SEARCH CLASSES IN STYLES FILES
+Find.find("./sample") do |searchStyles|
+  case
+    when File.file?(searchStyles) then
+      File.open(searchStyles, "r") do |readFile|
+        if searchStyles.end_with?("css", "scss")
+          while line = readFile.gets
+            for thisClass in allClasses do
+              if line.include?(thisClass)
+                puts "Class #{thisClass} found!"
+              end
+            end
+          end
+
+        end
+      end
+    #
+  end
+end
