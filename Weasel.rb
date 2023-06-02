@@ -1,7 +1,7 @@
 require "find"
 
 allClasses = Array.new
-unusedClasses = Array.new
+usedClasses = Array.new
 
 # FIND ALL CLASSES
 Find.find("./sample") do |findClasses|
@@ -37,7 +37,7 @@ Find.find("./sample") do |searchStyles|
           while line = readFile.gets
             for thisClass in allClasses do
               if line.include?(thisClass)
-                puts "Class #{thisClass} found!"
+                usedClasses << thisClass
               end
             end
           end
@@ -47,3 +47,9 @@ Find.find("./sample") do |searchStyles|
     #
   end
 end
+
+unusedClasses = allClasses - usedClasses
+
+unusedClasses.length().times {
+  |i| puts "Class [ #{unusedClasses[i]} ] is not being used."
+}
