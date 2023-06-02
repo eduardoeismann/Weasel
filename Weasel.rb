@@ -1,41 +1,29 @@
 require 'find'
 
-classes = Array.new
+allClasses = Array.new
 
-Find.find('./sample') do |findThem|
+# FIND ALL CLASSES
+Find.find('./sample') do |findClasses|
   case
-    when File.file?(findThem) then 
-      puts "Reading file:  #{findThem}"
+    when File.file?(findClasses) then 
 
-      File.open(findThem, 'r') do |readFile|
-        while line = readFile.gets
-          if line.include? "class=\""
-            startClasses = line.split("class=\"")[1]
+      File.open(findClasses, 'r') do |readFile|
 
-            # UNTIL HERE
+        if findClasses.end_with?(".html", "xhtml")
+          puts "Reading file:  #{findClasses}"
 
-            # IF THE LINE HAS A CLASS DECLARATION, THEN
-            # WILL STORE THE TEXT OF THIS LINE FROM THE
-            # CLASS QUOTE OPENING
-
-            # EXAMPLE:
-            # ENTIRE LINE: <h1 class="main_title">Page Sample</h1>
-            # SUBSTNG LINE: main_title">Page Sample</h1>
-
-
-            # NEXT STEPS
-            # GET EACH CLASS THAT IS INSIDE THE DECLARATION
-            # AND STORE THEM IN AN ARRAY ( classes ) <- ARRAY WAS DECLARED ABOVE
-
-            puts line
+          while line = readFile.gets
+            if line.include? "class=\""
+              startClasses = line.split("class=\"")[1]
+              startClasses = startClasses.split("\"")[0]
+              allClasses << startClasses.split(" ")
+            end
           end
         end
       end
-
-      puts "\n"
-
-    when File.directory?(findThem) then 
-      puts "It is a Directory."
-    else "?"
+    #
   end
 end
+
+puts "\nClasses Found: "
+puts allClasses
