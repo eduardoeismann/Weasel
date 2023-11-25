@@ -3,13 +3,16 @@ require "find"
 allClasses = Array.new
 usedClasses = Array.new
 
+puts "Enter the full directory path:"
+directory = gets.chomp
+puts directory
+
 # FIND ALL CLASSES
-Find.find("./sample") do |findClasses|
+Find.find(directory) do |findClasses|
   case
     when File.file?(findClasses) then 
 
       File.open(findClasses, "r") do |readFile|
-
         if findClasses.end_with?(".html", "xhtml")
           while line = readFile.gets
             if line.include? "class=\""
@@ -22,8 +25,8 @@ Find.find("./sample") do |findClasses|
             end
           end
         end
-
       end
+
     #
   end
 end
@@ -32,6 +35,7 @@ end
 Find.find("./sample") do |searchStyles|
   case
     when File.file?(searchStyles) then
+
       File.open(searchStyles, "r") do |readFile|
         if searchStyles.end_with?("css", "scss")
           while line = readFile.gets
@@ -41,9 +45,9 @@ Find.find("./sample") do |searchStyles|
               end
             end
           end
-
         end
       end
+
     #
   end
 end
