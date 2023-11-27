@@ -5,7 +5,7 @@ usedClasses = Array.new
 
 puts "Enter the full directory path:"
 directory = gets.chomp
-puts directory
+puts "Reading: ", directory
 
 # FIND ALL CLASSES
 Find.find(directory) do |findClasses|
@@ -32,7 +32,7 @@ Find.find(directory) do |findClasses|
 end
 
 # SEARCH CLASSES IN STYLES FILES
-Find.find("./sample") do |searchStyles|
+Find.find(directory) do |searchStyles|
   case
     when File.file?(searchStyles) then
 
@@ -57,3 +57,7 @@ unusedClasses = allClasses - usedClasses
 unusedClasses.length().times {
   |i| puts "Class [ #{unusedClasses[i]} ] is not being used."
 }
+
+if unusedClasses.length() == 0
+  puts "There is no unused classes!"
+end
