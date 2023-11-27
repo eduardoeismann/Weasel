@@ -1,0 +1,6 @@
+When a class starts with a name similar to the existing class, it is disregarded. Fix this!
+
+Example:
+IN HTML: class="this-is-the-way"
+
+IN CSS: .this-is-the-wa <- It'll br acepted.
